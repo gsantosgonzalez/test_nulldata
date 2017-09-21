@@ -18,4 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/employees', 'EmployeesController@index');
+
+//Employees
+Route::get('employees', function(){
+	return view('employees/index');
+});
+Route::get('/employees/create', 'EmployeesController@create')->name('createEmployee');
+Route::post('/employees/update', 'EmployeesController@update')->name('updateEmployee');
+Route::post('/employees', 'EmployeesController@store');
+Route::get('/getEmployees', 'EmployeesController@listEmployees')->name('getEmployees');
