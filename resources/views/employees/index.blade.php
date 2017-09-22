@@ -1,5 +1,5 @@
 @include('layouts.app')
 
 @section('content')
-	<employees></employees>
+    <employees></employees>
 @endsection

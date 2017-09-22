@@ -57,15 +57,13 @@
                 },
             }
         },
-        ready: function(){
-            this.getEmployees();
-        },
         mounted() {
-            axios.get('getEmployees').then(response => {
+            console.log('hola')
+            /*axios.get('getEmployees').then(response => {
                 $.each(response.data, (index, value) => {
                     this.employees.push(value);
                 })
-            });
+            });*/
         },
         methods: {
             getEmployees(){

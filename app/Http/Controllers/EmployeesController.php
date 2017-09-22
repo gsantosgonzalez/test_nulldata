@@ -44,20 +44,18 @@ class EmployeesController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all(), [
-            'name' => 'required|unique:tools',
-            'description' => 'required',
-            'type_id' => 'required|exists:types,id',
-            'area_id' => 'required|exists:areas,id',
-            'responsible_id' => 'required|exists:responsibles,id'
+            'name' => 'required|unique:employees',
+            'email' => 'required|email|unique',
+            'birthdate' => 'required|date|date_format:d/m/Y'
         ]);
 
         if($validation->fails()){
             return response()->json(['status' => 0, 'errors' => $validation->errors()]);
         }
 
-        $tool = \App\Tool::create($request->all());
+        $employee = Employee::create($request->all());
 
-        return response()->json(['status' => 1, 'tool' => $tool]);
+        return response()->json(['status' => 1, 'employee' => $employee]);
     }
 
     public function update(Request $request)
@@ -65,31 +63,28 @@ class EmployeesController extends Controller
         $validator = Validator::make($request->input, [
             'name' => [
                 'required',
-                Rule::unique('tools')->ignore($request->id)
+                Rule::unique('employees')->ignore($request->id)
             ],
-            'description' => 'required',
-            'type_id' => 'required|exists:types,id',
-            'area_id' => 'required|exists:areas,id',
-            'responsible_id' => 'required|exists:responsibles,id'
+            'email' => [
+                'required',
+                Rule::unique('employees')->ignore($request->id)
+            ],
+            'birthdate' => 'required'
         ]);
 
         if($validator->fails()){
             return response()->json(['status' => 0, 'errors' => $validator->errors()]);
         }
         else{
-            $tool = \App\Tool::find($request->id)->update($request->input);
+            $employee = Employee::find($request->id)->update($request->input);
             return response()->json(['status' => 1]);
         }
     }
 
     public function destroy($id)
     {
-        Tool::find($id)->delete();
+        Employee::find($id)->delete();
         return response()->json(['status' => 1]);
-    }
-
-    public function getFilteredTools(Request $request) {
-
     }
 
 }
