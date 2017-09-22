@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('employees', function(){
 	return view('employees/index');
 });
-Route::get('/employees/create', 'EmployeesController@create')->name('createEmployee');
-Route::post('/employees/update', 'EmployeesController@update')->name('updateEmployee');
-Route::post('/employees', 'EmployeesController@store');
-Route::get('/getEmployees', 'EmployeesController@listEmployees')->name('getEmployees');
+Route::get('/employees/create', 'EmployeesController@create')->name('createEmployee')->middleware('auth');
+Route::post('/employees/update', 'EmployeesController@update')->name('updateEmployee')->middleware('auth');
+Route::post('/employees', 'EmployeesController@store')->middleware('auth');
+Route::get('/getEmployees', 'EmployeesController@listEmployees')->name('getEmployees')->middleware('auth');
